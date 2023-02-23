@@ -5,7 +5,7 @@
         <span v-if="!isCollapse" class="iconfont icon-right-indent" @click="changeMenu"></span>
         <span v-if="isCollapse" class="iconfont icon-left-indent" @click="changeMenu"></span>
       </div>
-      <h3>顶部组件</h3>
+      <h3></h3>
     </div>
     <div class="contentMain">
       <router-view></router-view>
