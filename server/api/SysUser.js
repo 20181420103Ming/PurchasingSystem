@@ -107,10 +107,10 @@ const jsonWrite = function (res, ret) {
 //   })
 // })
  
-// 接口：查询用户信息
+// 接口：查询订单信息
 router.get('/get',(req, res) => {
   const params = req.query
-  const sql= `select * from oederlist`
+  const sql= `select * from orderlist where usernum=${params.num}`
   conn.query(sql,[params.username],function(err, result){
     if(err){
       console.log(err)
@@ -120,7 +120,43 @@ router.get('/get',(req, res) => {
     }
   })
 })
- 
+router.get('/orderInfo',(req,res)=>{
+  const params = req.query
+  const sql = `select * from orderInfo`
+  conn.query(sql,"",function(err,result){
+    if(err){
+      console.log(err);
+    }
+    if(result){
+      jsonWrite(res,result)
+    }
+  })
+})
+router.get('/proInfo',(req,res)=>{
+  const params =req.query
+  const sql = `select * from proInfo`
+  conn.query(sql,"",function(err,result){
+    if(err){
+      console.log(err);
+    }if(result){
+      jsonWrite(res,result)
+    }
+  })
+ })
+ //删除产品信息
+router.get('/deleteInfo',(req,res)=>{
+  const params= req.query
+  const sql=`DELETE FROM proInfo where proId=${params.proId}`
+  conn.query(sql,[params.proId],(err,result)=>{
+    if(err){
+      console.log(err);
+    }if(result){
+      result.message='删除成功'
+      jsonWrite(res,result)
+      //console.log(result);
+    }
+  })
+})
 // 接口：编辑修改更新用户信息
 // router.post('/alterinfo',(req,res)=>{
 //   const params = req.body

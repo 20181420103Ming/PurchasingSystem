@@ -8,7 +8,8 @@ import './plugins/element.js'
 import router from './router'
 import store from './store'
 
-Vue.prototype.$ajax=axios
+
+Vue.prototype.$axios=axios
 Vue.config.productionTip = false
 
 new Vue({

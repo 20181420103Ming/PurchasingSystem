@@ -8,7 +8,7 @@
       <h3></h3>
     </div>
     <div class="contentMain">
-      <router-view></router-view>
+      <router-view ></router-view>
     </div>
   </div>
 </template>
@@ -27,7 +27,13 @@ export default {
   methods:{
     changeMenu:function(){
       this.$emit('changeShow')
-    }
+    },
+    // handleEdit(index, row) {
+    //     console.log(index,row);
+    //   },
+    //   handleDelete(index, row) {
+    //     console.log(index, row);
+    //   }
   }
 };
 </script>
