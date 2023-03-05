@@ -146,8 +146,8 @@ router.get('/proInfo',(req,res)=>{
  //删除产品信息
 router.get('/deleteInfo',(req,res)=>{
   const params= req.query
-  const sql=`DELETE FROM proInfo where proId=${params.proId}`
-  conn.query(sql,[params.proId],(err,result)=>{
+  const sql=`DELETE FROM proInfo where keynum=${params.keynum}`
+  conn.query(sql,[params.keynum],(err,result)=>{
     if(err){
       console.log(err);
     }if(result){

@@ -19,7 +19,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, tableData)">删除</el-button>
+            @click="handleDelete(scope.$index+1, tableData)">删除</el-button>
         </template>
       </el-table-column>
   </el-table>
@@ -49,7 +49,7 @@ methods:{
         handleDelete(index, row){
           //this.$emit('handleDelete')
           row.splice(index,1) 
-          let params={proId:row[index].proId}
+          let params={keynum:row[index-1].keynum}
           console.log(params);
            axios.get(localhost+'/deleteInfo',{params:params}).then((response)=>{
              console.log(response);
