@@ -41,12 +41,19 @@
       </header>
     </div>
     <div class="centerPart">
-      <div class="partOne"><h5 style="margin: 5px 0 0 5px">月销售额</h5>
-      <div id="charts" style="height:100%;width:80%;margin-left: 10%;"></div>
+      <div class="partOne">
+        <h5 style="margin: 5px 0 0 5px">月销售额</h5>
+        <div
+          id="charts"
+          style="height: 100%; width: 80%; margin-left: 10%"
+        ></div>
       </div>
       <div class="partTwo">
         <h5 style="margin: 5px 0 0 5px">产品销售比例</h5>
-        <div id="charts2" style="height:100%;width:80%;margin-left: 10%;"></div>
+        <div
+          id="charts2"
+          style="height: 100%; width: 80%; margin-left: 10%"
+        ></div>
       </div>
     </div>
     <div class="centerPartTwo">
@@ -54,21 +61,24 @@
         <h5 style="margin: 10px 0 0 10px">今日订单</h5>
         <div
           style="
-          width: 100%;
+            width: 100%;
             height: 2px;
             background: #f5f5f5;
             margin-top: 10px;
           "
         ></div>
         <div class="orderDetils">
-          <h6>今日订单数
+          <h6>
+            今日订单数
             <div>{{ list.sale }}</div>
           </h6>
-         
-          <h6>汇总确认订单
+
+          <h6>
+            汇总确认订单
             <div>{{ list.saleToal }}</div>
           </h6>
-          <h6>累计金额
+          <h6>
+            累计金额
             <div>{{ list.payToal }}</div>
           </h6>
         </div>
@@ -84,13 +94,16 @@
           "
         ></div>
         <div class="orderDetils">
-          <h6>本月订单数
+          <h6>
+            本月订单数
             <div>{{ list.viewsToal }}</div>
           </h6>
-          <h6>汇总确认订单
+          <h6>
+            汇总确认订单
             <div>{{ list.viewsToal }}</div>
           </h6>
-          <h6>累计金额
+          <h6>
+            累计金额
             <div>{{ list.payToal }}</div>
           </h6>
         </div>
@@ -117,123 +130,138 @@
 
 <script>
 import axios from "axios";
-import * as echarts from 'echarts';
-var localhost="http://localhost:3000/api/sysuser"
+import * as echarts from "echarts";
+var localhost = "http://localhost:3000/api/sysuser";
 export default {
   data() {
     return {
       list: {},
     };
   },
-  created() {
-  
-  },
-  mounted(){
+  created() {},
+  mounted() {
     this.getlist();
-    this.getOrderInfo()
-// 基于准备好的dom，初始化echarts实例
-var myChart = echarts.init(document.getElementById('charts'));
-var myChart2 = echarts.init(document.getElementById('charts2'));
-window.addEventListener('resize',() => { myChart.resize(); });
-window.addEventListener('resize',() => { myChart2.resize(); });
-
-// 绘制图表
-myChart.setOption({
-  tooltip: {},
-  legend: {
-  },
-  xAxis: {
-    data: ['肉类', '水产', '蔬菜', '冷饮食品', '水果', ]
-  },
-  yAxis: {},
-  series: [
-    {
-      name: '销售额',
-      type: 'line',
-      data: [15, 25, 46,15, 15],
-      smooth:true
-    },
-    {
-      name: '销售量',
-      type: 'bar',
-      data: [10, 20, 36, 10, 10]
-    }
-  ]
-});
-// var option;
-
-myChart2.setOption({
-  tooltip: {
-    trigger: 'item'
-  },
-  legend: {
-    orient: 'vertical',
-    left: 'left'
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      radius: '50%',
-      data: [
-        { value: 1048, name: '审议' },
-        { value: 735, name: '淘宝' },
-        { value: 580, name: '京东' },
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
-    }
-  ]
-});
-
-// option && myChart2.setOption(option);
-
+    this.getOrderInfo();
+    this.getEchartsInfo();
+    this.cycle()
   },
   methods: {
-   
     async getlist() {
-      // let params = {
-      //   keyword: this.keyword,
-      //   pageIndex: this.pageIndex,
-      //   pageSize: this.pageSize
-      // }
-      // 这里使用http://localhost:3000是因为配置地方监听的3000端口
-      // /api/sysuser 这一部分也是在index.js中引入配置的
-      // /getlist 是在api接口里面的方法
-      // 整个三部分组合成立通常使用的接口
-      // 其中 前面地址部分可以自己全局去定义，同样$http(axios)也可以封装
       let params = { num: 20181420103 };
-      axios
-        .get(localhost+"/get", { params: params })
+      await axios
+        .get(localhost + "/get", { params: params })
         .then((response) => {
-          console.log(response);
+         //console.log(response);
           if (response.status == 200) {
             let datas = response.data;
-            console.log(datas[0].usernum);
+            //console.log(datas[0].usernum);
             this.list = datas[0];
           } else {
-            console.log(response);
+            //console.log(response);
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
         });
     },
-    async getOrderInfo(){
-      axios.get(localhost+"/orderInfo","").then((response)=>{
-        console.log(response);
-      })
-    }
+    async getOrderInfo() {
+      await axios.get(localhost + "/orderInfo", "").then((response) => {
+       //console.log(response);
+      });
+    },
+    async getEchartsInfo() {
+      await axios.get(localhost + "/echartInfo","").then((response) => {
+        //console.log(response.data);
+        const array = response.data;
+        const proName = [],
+          saleCount = [],
+          saleMoney = [];
+         // console.log(array);
+        array.forEach((ele) => {
+          if(ele.type==1){
+            proName.push(ele.proName);
+          saleCount.push(ele.proTotal);
+          saleMoney.push(ele.money);
+          }
+          
+        });
+       // console.log(proName);
+        this.line(proName, saleCount, saleMoney);
+      });
+    },
+    //柱状统计图
+    line: (proName, saleCount, saleMoney) => {
+      var myChart = echarts.init(document.getElementById("charts"));
+      window.addEventListener("resize", () => {
+        myChart.resize();
+      });
+      myChart.setOption({
+        tooltip: {},
+        legend: {},
+        xAxis: {
+          data: proName,
+        },
+        yAxis: {},
+        series: [
+          {
+            name: "销售额",
+            type: "line",
+            data: saleMoney,
+            smooth: true,
+          },
+          {
+            name: "销售量",
+            type: "bar",
+            data: saleCount,
+          },
+        ],
+      });
+    },
+    //饼状统计图
+    cycle: () => {
+      var myChart2 = echarts.init(document.getElementById("charts2"));
+      window.addEventListener("resize", () => {
+        myChart2.resize();
+      });
+
+      myChart2.setOption({
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          orient: "vertical",
+          left: "left",
+        },
+        series: [
+          {
+            name: "Access From",
+            type: "pie",
+            radius: "50%",
+            data: [
+              { value: 1048, name: "审议" },
+              { value: 735, name: "淘宝" },
+              { value: 580, name: "京东" },
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+          },
+        ],
+      });
+
+      // option && myChart2.setOption(option);
+    },
   },
   filters: {
     num(value) {
       if (!value) return;
-      return value.toLocaleString();
+      value = value.toLocaleString();
+      //return value
+      return value;
     },
   },
 };

@@ -46,12 +46,12 @@ methods:{
             this.tableData=response.data
           })
         },
-        handleDelete(index, row){
+        async handleDelete(index, row){
           //this.$emit('handleDelete')
-          row.splice(index,1) 
+         
           let params={keynum:row[index-1].keynum}
           console.log(params);
-           axios.get(localhost+'/deleteInfo',{params:params}).then((response)=>{
+          await axios.get(localhost+'/deleteInfo',{params:params}).then((response)=>{
              console.log(response);
              if(response.status==200){
               this.$message({
@@ -61,7 +61,7 @@ methods:{
              }
           
            })
-
+           row.splice(index-1,1) 
         },
         handleEdit(index, row){
           //this.$emit('handleEdit')

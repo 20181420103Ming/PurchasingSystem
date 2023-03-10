@@ -157,6 +157,18 @@ router.get('/deleteInfo',(req,res)=>{
     }
   })
 })
+router.get('/echartInfo',(req,res)=>{
+  const params=req.query
+  const sql=`select * from echartInfo `
+  conn.query(sql,"".type,(err,result)=>{
+    if(err){
+      res.send('查询失败')
+    }
+    if(result){
+      jsonWrite(res,result)
+    }
+  })
+})
 // 接口：编辑修改更新用户信息
 // router.post('/alterinfo',(req,res)=>{
 //   const params = req.body
