@@ -175,7 +175,8 @@ export default {
         const array = response.data;
         const proName = [],
           saleCount = [],
-          saleMoney = [];
+          saleMoney = [],
+          cycleDate=[];
          // console.log(array);
         array.forEach((ele) => {
           if(ele.type==1){
@@ -183,10 +184,16 @@ export default {
           saleCount.push(ele.proTotal);
           saleMoney.push(ele.money);
           }
-          
+          if(ele.type==2){
+            let obj={}
+            obj.name=ele.proName,
+            obj.value=ele.proTotal
+            cycleDate.push(obj)
+          }
         });
        // console.log(proName);
         this.line(proName, saleCount, saleMoney);
+        this.cycle(cycleDate)
       });
     },
     //柱状统计图
@@ -218,7 +225,7 @@ export default {
       });
     },
     //饼状统计图
-    cycle: () => {
+    cycle: (obj) => {
       var myChart2 = echarts.init(document.getElementById("charts2"));
       window.addEventListener("resize", () => {
         myChart2.resize();
@@ -237,11 +244,12 @@ export default {
             name: "Access From",
             type: "pie",
             radius: "50%",
-            data: [
-              { value: 1048, name: "审议" },
-              { value: 735, name: "淘宝" },
-              { value: 580, name: "京东" },
-            ],
+            data:obj,
+            //  [
+            //   { value: 1048, name: "审议" },
+            //   { value: 735, name: "淘宝" },
+            //   { value: 580, name: "京东" },
+            // ],
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,

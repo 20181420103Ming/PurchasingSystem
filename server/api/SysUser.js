@@ -122,7 +122,7 @@ router.get('/get',(req, res) => {
 })
 router.get('/orderInfo',(req,res)=>{
   const params = req.query
-  const sql = `select * from orderInfo`
+  const sql = `select * from orderInfo `
   conn.query(sql,"",function(err,result){
     if(err){
       console.log(err);
@@ -133,6 +133,17 @@ router.get('/orderInfo',(req,res)=>{
   })
 })
 router.get('/proInfo',(req,res)=>{
+  const params =req.query
+  const sql = `select * from proInfo where page=${params.page}`
+  conn.query(sql,[params.page],function(err,result){
+    if(err){
+      console.log(err);
+    }if(result){
+      jsonWrite(res,result)
+    }
+  })
+ })
+ router.get('/allproInfo',(req,res)=>{
   const params =req.query
   const sql = `select * from proInfo`
   conn.query(sql,"",function(err,result){
@@ -160,7 +171,19 @@ router.get('/deleteInfo',(req,res)=>{
 router.get('/echartInfo',(req,res)=>{
   const params=req.query
   const sql=`select * from echartInfo `
-  conn.query(sql,"".type,(err,result)=>{
+  conn.query(sql,"",(err,result)=>{
+    if(err){
+      res.send('查询失败')
+    }
+    if(result){
+      jsonWrite(res,result)
+    }
+  })
+})
+router.get('/search',(req,res)=>{
+  const params=req.query
+  const sql="select * from proInfo where concat(`proName`,`produce`) like '%"+[params.search]+"%' "
+  conn.query(sql,[params.search].type,(err,result)=>{
     if(err){
       res.send('查询失败')
     }
