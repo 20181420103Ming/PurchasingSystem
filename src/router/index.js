@@ -11,6 +11,7 @@ import OrderList from '../views/order/orderlist/OrderList.vue'
 import Order from '../views/order/OrderView.vue'
 import List from '../views/product/pChildern/PcOne.vue'
 import Categary from '../views/product/pChildern/PcTwo.vue'
+import ProductPage from '../views/product/pChildern/ProductPage.vue'
 import Product from '../views/product/ProductView.vue'
 
 Vue.use(VueRouter)
@@ -37,7 +38,12 @@ const routes = [
         path: 'category',
         name: 'category',
         component: Categary
-      }]
+      },
+    {
+      path:'product-page',
+      name:'ProductPage',
+      component:ProductPage
+    }]
     },
     {
       path:'/order',

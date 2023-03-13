@@ -5,6 +5,7 @@
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="产品名称">
             <el-input
+            @blur="blur"
               v-model="formInline.name"
               size="small"
               placeholder="产品名称"
@@ -27,7 +28,7 @@
         </el-form>
       </div>
       <div class="group">
-        <el-button type="warning" size="small" icon="el-icon-plus"
+        <el-button @click="toAddPage()" type="warning" size="small" icon="el-icon-plus"
           >添加商品</el-button
         >
         <el-button type="danger" size="small" icon="el-icon-delete"
@@ -107,6 +108,9 @@ export default {
       }else{this.search(this.formInline.name)}
       
     },
+    toAddPage(){
+     this.$router.push('/product/product-page')
+    },
     //获取产品所有信息
     getAllProInfo() {
       axios.get(localhost + "/allproInfo", "").then((response) => {
@@ -121,6 +125,12 @@ export default {
         //console.log(response);
         this.tableData = response.data;
       });
+    },
+    //失去焦点
+    blur(){
+      if(!this.formInline.name){
+        this.getProInfo(1)
+      }
     },
     //搜索
     async search(search){

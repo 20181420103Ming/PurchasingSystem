@@ -2,39 +2,77 @@
   <div class="contentPage">
     <div class="header">
       <div class="open">
-        <span v-if="!isCollapse" class="iconfont icon-right-indent" @click="changeMenu"></span>
-        <span v-if="isCollapse" class="iconfont icon-left-indent" @click="changeMenu"></span>
+        <span
+          v-if="!isCollapse"
+          class="iconfont icon-right-indent"
+          @click="changeMenu"
+        ></span>
+        <span
+          v-if="isCollapse"
+          class="iconfont icon-left-indent"
+          @click="changeMenu"
+        ></span>
       </div>
-      <h3></h3>
+      <div class="dataTime" style="display:inline-block;margin-left:70%">{{ dateTime }}</div>
+      <div class="choosepicker" style="display:inline-block;margin-left: 2%;">
+        <el-dropdown @command="hanldCommand">
+          <span class="el-dropdown-link">
+            下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="4">黄金糕</el-dropdown-item>
+            <el-dropdown-item command="3">狮子头</el-dropdown-item>
+            <el-dropdown-item command="2">螺蛳粉</el-dropdown-item>
+            <el-dropdown-item command="1" disabled>双皮奶</el-dropdown-item>
+            <el-dropdown-item command="0" divided>蚵仔煎</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
     <div class="contentMain">
-      <router-view ></router-view>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props:['isCollapse'],
+  props: ["isCollapse"],
   data() {
     return {
-      
+      dateTime: "",
     };
   },
-  components: {
-    
+  mounted() {
+    setInterval(() => {
+      this.dateChange();
+    }, 1000);
   },
-  methods:{
-    changeMenu:function(){
-      this.$emit('changeShow')
+  components: {},
+  methods: {
+    hanldCommand(command){
+this.$message({
+  message: command,
+  type: 'success'
+})
     },
-    // handleEdit(index, row) {
-    //     console.log(index,row);
-    //   },
-    //   handleDelete(index, row) {
-    //     console.log(index, row);
-    //   }
-  }
+    //时间格式
+    dateChange() {
+      const oldDate = new Date();
+      this.dateTime =
+        oldDate.getFullYear() +
+        "-" +
+        (oldDate.getMonth() + 1) +
+        "-" +
+        oldDate.getDate() +
+        "  " +
+        oldDate.toLocaleTimeString();
+    },
+
+    changeMenu: function () {
+      this.$emit("changeShow");
+    },
+  },
 };
 </script>
 
@@ -54,6 +92,14 @@ export default {
         font-size: 18px;
         cursor: pointer;
       }
+      
+    }
+    .el-dropdown-link {
+      cursor: pointer;
+      color: #fff;
+    }
+    .el-icon-arrow-down {
+      font-size: 12px;
     }
   }
 }
